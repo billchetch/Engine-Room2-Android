@@ -30,6 +30,7 @@ public class IndicatorFragment extends Fragment implements MenuItem.OnMenuItemCl
     enum State{
         ON,
         OFF,
+        ERROR,
         DISABLED
     }
 
@@ -69,6 +70,7 @@ public class IndicatorFragment extends Fragment implements MenuItem.OnMenuItemCl
             stateColours.put(State.DISABLED, ContextCompat.getColor(getContext(), R.color.darkGrey));
             stateColours.put(State.OFF, ContextCompat.getColor(getContext(), R.color.mediumnDarkGrey));
             stateColours.put(State.ON, ContextCompat.getColor(getContext(), R.color.bluegreen2));
+            stateColours.put(State.ERROR, ContextCompat.getColor(getContext(), R.color.errorRed));
         }
 
         if(menuItems == null) {
@@ -179,6 +181,9 @@ public class IndicatorFragment extends Fragment implements MenuItem.OnMenuItemCl
                 case ON:
                 case OFF:
                     textColour = ContextCompat.getColor(getContext(), R.color.white);
+                    break;
+                case ERROR:
+                    textColour = ContextCompat.getColor(getContext(), R.color.errorRed);
                     break;
                 case DISABLED:
                     textColour = ContextCompat.getColor(getContext(), R.color.mediumGrey);

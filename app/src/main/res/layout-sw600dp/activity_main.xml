@@ -64,22 +64,10 @@
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="32dp"
-        android:tag="Genset 1"
+        app:engine_name="Genset 1"
+        app:include_hz="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/notificationbar" />
-
-    <fragment
-        android:id="@+id/gs2"
-        android:name="net.chetch.engineroom2.EngineFragment"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
-        android:tag="Genset 2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gs1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

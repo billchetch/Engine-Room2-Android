@@ -31,7 +31,7 @@ public class LinearScaleFragment extends Fragment {
     int maxValue = 100;
     ImageView linearScaleView;
     TextView valueView;
-    List<Integer> thresholdValues = new ArrayList();
+    List<Double> thresholdValues = new ArrayList();
     List<Integer> thresholdColours = new ArrayList();
     String name;
     Orientation orientation = Orientation.HORIZONTAL;
@@ -97,6 +97,13 @@ public class LinearScaleFragment extends Fragment {
     public void setThresholdValues(int ... thresholds){
         thresholdValues.clear();
         for(int i : thresholds){
+            thresholdValues.add((double)i);
+        }
+    }
+
+    public void setThresholdValues(double ... thresholds){
+        thresholdValues.clear();
+        for(double i : thresholds){
             thresholdValues.add(i);
         }
     }
@@ -113,7 +120,17 @@ public class LinearScaleFragment extends Fragment {
         tv.setText(name);
     }
 
+
+
     public void updateValue(double value){
+        updateValue(value, String.format(valueFormat, value));
+    }
+
+    public void updateValue(int value){
+        updateValue((double)value, String.format("%d", value));
+    }
+
+    public void updateValue(double value, String valueAsString){
         View scaleBorder = contentView.findViewById(R.id.lsScaleBorder);
         boolean scaleWidth = orientation == Orientation.HORIZONTAL;
 
@@ -125,7 +142,7 @@ public class LinearScaleFragment extends Fragment {
         } else if(value >= maxValue){
             scale = 1;
         } else {
-            scale = (double)(value - minValue) / (double)maxValue;
+            scale = (double)(value - minValue) / (double)(maxValue - minValue);
         }
 
         int dim = (int)(scale*(double)lsMax);
@@ -150,11 +167,7 @@ public class LinearScaleFragment extends Fragment {
 
         linearScaleView.setVisibility(dim > 0 ? View.VISIBLE: View.INVISIBLE);
 
-        setValue(value);
-    }
-
-    protected void setValue(double value){
-        String sv = String.format(valueFormat, value);
-        valueView.setText(value == 0 ? "" : sv);
+        //set the label
+        valueView.setText(value == 0 ? "" : valueAsString);
     }
 }

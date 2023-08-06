@@ -15,7 +15,14 @@ public class EngineRoomMessageSchema extends MessageSchema {
     }
 
     public void assignEngineData(Engine engine){
+        engine.running = message.getBoolean(fn("Running"));
+        engine.runningFor = message.getLong(fn("RunningFor"));
+        engine.ranFor = message.getLong(fn("RanFor"));
         engine.rpm = message.getInt(fn("RPM"));
         engine.temp = message.getDouble(fn("Temp"));
+        engine.oil = message.getEnum(fn("OilPressure"), Engine.OilPressureState.class);
+        engine.lastOn = message.getCalendar(fn("LastOn"));
+        engine.lastOff = message.getCalendar(fn("LastOff"));
+
     }
 }

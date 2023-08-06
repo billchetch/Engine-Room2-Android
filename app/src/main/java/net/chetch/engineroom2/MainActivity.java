@@ -12,12 +12,16 @@ import android.util.Log;
 import net.chetch.appframework.GenericActivity;
 import net.chetch.appframework.IDialogManager;
 import net.chetch.appframework.NotificationBar;
+import net.chetch.engineroom2.models.EngineRoomMessageSchema;
 import net.chetch.engineroom2.models.EngineRoomMessagingModel;
 import net.chetch.messaging.ClientConnection;
+import net.chetch.messaging.MessagingViewModel;
 import net.chetch.messaging.exceptions.MessagingServiceException;
 import net.chetch.utilities.Logger;
 import net.chetch.utilities.SLog;
+import net.chetch.utilities.Utils;
 import net.chetch.webservices.ConnectManager;
+import net.chetch.webservices.Webservice;
 import net.chetch.webservices.WebserviceViewModel;
 
 
@@ -124,6 +128,26 @@ public class MainActivity extends GenericActivity implements NotificationBar.INo
         showError(errMsg);
 
         SLog.e("MAIN", t.getClass() + ": " + t.getMessage());
+    }
+
+    @Override
+    public void openAbout() {
+        super.openAbout();
+        try {
+            String lf = "\n";
+            ERApplication app = (ERApplication)getApplication();
+            ClientConnection client = model.getClient();
+            String s = "";
+            s += "App uptime: " + Utils.formatDuration(app.getUpTime(), Utils.DurationFormat.DAYS_HOURS_MINS_SECS) + lf;
+            s += client.getName() + " is of state " + client.getState() + lf;
+            MessagingViewModel.MessagingService bbalarms = model.getMessaingService(EngineRoomMessageSchema.SERVICE_NAME);
+            s += bbalarms.name + " service is of state " + bbalarms.state + lf;
+            s += "Last message received on: " + Utils.formatDate(bbalarms.lastMessageReceivedOn, Webservice.DEFAULT_DATE_FORMAT);
+            aboutDialog.aboutBlurb = s;
+
+        } catch (Exception e){
+
+        }
     }
 
     @Override

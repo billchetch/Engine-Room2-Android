@@ -41,6 +41,6 @@ public class EngineRoomMessagingModel extends MessagingViewModel {
 
 
     public MutableLiveData<Engine> getEngine(String id){
-        return engineDataFilters.get(id).liveData;
+        return engineDataFilters.containsKey(id) ? engineDataFilters.get(id).liveData : null;
     }
 }

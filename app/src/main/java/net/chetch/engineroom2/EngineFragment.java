@@ -2,6 +2,7 @@ package net.chetch.engineroom2;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -46,6 +47,23 @@ public class EngineFragment extends Fragment implements IExpandIconListener {
         title = (IndicatorFragment)fm.findFragmentById(R.id.engineTitle);
         title.setName(tag.toString());
         title.update(IndicatorFragment.State.OFF, "Connecting...");
+        title.getView().setOnClickListener((view)->{
+            expandDetails.onClick(null);
+        });
+
+        MenuItem.OnMenuItemClickListener selectMenuItem = (item) -> {
+            switch(item.getItemId()){
+                case IndicatorFragment.MENU_ITEM_DISABLE:
+                    return true;
+                case IndicatorFragment.MENU_ITEM_ENABLE:
+                    return true;
+                case IndicatorFragment.MENU_ITEM_VIEW_STATS:
+                    return true;
+            }
+            return true;
+        };
+
+        title.setContextMenu(selectMenuItem);
 
         //Expand Icon
         expandDetails = (ExpandIconFragment)fm.findFragmentById(R.id.expandDetails);
@@ -80,10 +98,13 @@ public class EngineFragment extends Fragment implements IExpandIconListener {
 
         //Listen to data coming in...
         EngineRoomMessagingModel model = ViewModelProviders.of(getActivity()).get(EngineRoomMessagingModel.class);
-        LiveData<Engine> ld = model.getEngine(EngineRoomMessageSchema.GS1_ID);
-        ld.observe(getViewLifecycleOwner(), (engine)->{
-            updateEngine(engine);
-        });
+        String idName = getResources().getResourceEntryName(getId());
+        LiveData<Engine> ld = model.getEngine(idName);
+        if(ld != null) {
+            ld.observe(getViewLifecycleOwner(), (engine) -> {
+                updateEngine(engine);
+            });
+        }
 
         return contentView;
     }
@@ -91,7 +112,13 @@ public class EngineFragment extends Fragment implements IExpandIconListener {
     private void updateEngine(Engine engine){
         SLog.i("EF", "Updating engine dong...");
 
-        title.update(IndicatorFragment.State.ON, "On bro...");
+        if(engine.isRunning()){
+            title.update(IndicatorFragment.State.ON, engine.getSummary());
+        } else {
+            title.update(IndicatorFragment.State.OFF, engine.getSummary());
+        }
+
+
 
         temperature.updateValue(engine.temp);
     }

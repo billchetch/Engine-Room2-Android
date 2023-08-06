@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import net.chetch.appframework.controls.ExpandIconFragment;
+import net.chetch.appframework.controls.IExpandIconListener;
 import net.chetch.engineroom2.models.EngineRoomMessageSchema;
 import net.chetch.engineroom2.models.EngineRoomMessagingModel;
 import net.chetch.engineroom2.data.Engine;
@@ -13,20 +15,70 @@ import net.chetch.utilities.SLog;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.lifecycle.ViewModelStoreOwner;
 
-public class EngineFragment extends Fragment {
+public class EngineFragment extends Fragment implements IExpandIconListener {
+    public String name = "Engine";
+
     View contentView;
+    IndicatorFragment title;
+    ExpandIconFragment expandDetails;
+    View detailsView;
+    LinearScaleFragment rpm;
+    LinearScaleFragment temperature;
+    IndicatorFragment oil;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         contentView = inflater.inflate(R.layout.engine_layout, container, false);
 
+        FragmentManager fm = getChildFragmentManager();
+        Object tag = getTag();
+
+        //Indicator and title
+        title = (IndicatorFragment)fm.findFragmentById(R.id.engineTitle);
+        title.setName(tag.toString());
+        title.update(IndicatorFragment.State.OFF, "Connecting...");
+
+        //Expand Icon
+        expandDetails = (ExpandIconFragment)fm.findFragmentById(R.id.expandDetails);
+        expandDetails.setListener(this);
+        detailsView = contentView.findViewById(R.id.engineDetails);
+
+        //RPM
+        rpm = (LinearScaleFragment)fm.findFragmentById(R.id.rpm);
+        rpm.setLimits(0, 2000);
+        rpm.setName("RPM");
+        rpm.setThresholdColours(
+                ContextCompat.getColor(getContext(), R.color.bluegreen2),
+                ContextCompat.getColor(getContext(), R.color.bluegreen),
+                ContextCompat.getColor(getContext(), R.color.age2),
+                ContextCompat.getColor(getContext(), R.color.age4));
+        rpm.setThresholdValues(1620, 1750, 2000);
+
+        //Temperature
+        temperature = (LinearScaleFragment)fm.findFragmentById(R.id.temp);
+        temperature.setLimits(0, 60);
+        temperature.setName("Temp");
+        temperature.setThresholdColours(
+                ContextCompat.getColor(getContext(), R.color.bluegreen2),
+                ContextCompat.getColor(getContext(), R.color.age2),
+                ContextCompat.getColor(getContext(), R.color.age4));
+        temperature.setThresholdValues(40, 45);
+
+        //Oil
+        oil  = (IndicatorFragment) fm.findFragmentById(R.id.oil);
+        oil.setName("Oil");
+        oil.update(IndicatorFragment.State.OFF, "");
+
+        //Listen to data coming in...
         EngineRoomMessagingModel model = ViewModelProviders.of(getActivity()).get(EngineRoomMessagingModel.class);
         LiveData<Engine> ld = model.getEngine(EngineRoomMessageSchema.GS1_ID);
         ld.observe(getViewLifecycleOwner(), (engine)->{
@@ -39,8 +91,18 @@ public class EngineFragment extends Fragment {
     private void updateEngine(Engine engine){
         SLog.i("EF", "Updating engine dong...");
 
-        TextView tv = contentView.findViewById(R.id.textView);
-        tv.setText("Engine " + engine.id + ": RPM " + engine.rpm + ", Temp "  + engine.temp);
+        title.update(IndicatorFragment.State.ON, "On bro...");
+
+        temperature.updateValue(engine.temp);
     }
 
+    @Override
+    public void onExpand() {
+        detailsView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onContract() {
+        detailsView.setVisibility(View.GONE);
+    }
 }

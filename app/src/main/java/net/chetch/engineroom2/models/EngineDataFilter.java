@@ -10,8 +10,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 public class EngineDataFilter extends ServiceDataFilter{
-    Engine engine;
+    public Engine engine;
     final public MutableLiveData<Engine> liveData = new MutableLiveData<>();
+
+    private EngineRoomMessageSchema schema = new EngineRoomMessageSchema();
 
     public EngineDataFilter(String engineID){
         super("AO:Type,AO:ID", "Engine", engineID);
@@ -22,7 +24,12 @@ public class EngineDataFilter extends ServiceDataFilter{
     @Override
     protected void onMatched(Message message) {
         SLog.i("EF", "Message received");
-        liveData.postValue(null);
+
+        //assign message values
+        schema.message = message;
+        schema.assignEngineData(engine);
+
+        //notify listeners
         liveData.postValue(engine);
     }
 }

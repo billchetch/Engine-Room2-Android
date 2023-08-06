@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 public class Engine {
     public String id;
     public int rpm;
+    public double temp;
 
     public Engine(String id){
         this.id = id;

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import net.chetch.engineroom2.models.EngineRoomMessageSchema;
 import net.chetch.engineroom2.models.EngineRoomMessagingModel;
@@ -26,22 +27,20 @@ public class EngineFragment extends Fragment {
         // Inflate the layout for this fragment
         contentView = inflater.inflate(R.layout.engine_layout, container, false);
 
+        EngineRoomMessagingModel model = ViewModelProviders.of(getActivity()).get(EngineRoomMessagingModel.class);
+        LiveData<Engine> ld = model.getEngine(EngineRoomMessageSchema.GS1_ID);
+        ld.observe(getViewLifecycleOwner(), (engine)->{
+            updateEngine(engine);
+        });
 
         return contentView;
     }
 
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        EngineRoomMessagingModel model = ViewModelProviders.of(this).get(EngineRoomMessagingModel.class);
-        LiveData<Engine> ld = model.getEngine(EngineRoomMessageSchema.GS1_ID);
-        ld.observeForever((engine)->{
-            updateEngine(engine);
-        });
-    }
-
     private void updateEngine(Engine engine){
         SLog.i("EF", "Updating engine dong...");
+
+        TextView tv = contentView.findViewById(R.id.textView);
+        tv.setText("Engine " + engine.id + ": RPM " + engine.rpm + ", Temp "  + engine.temp);
     }
 
 }

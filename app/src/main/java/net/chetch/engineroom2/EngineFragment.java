@@ -146,7 +146,7 @@ public class EngineFragment extends Fragment implements IExpandIconListener {
     }
 
     private void updateEngine(Engine engine){
-        SLog.i("EF", "Updating engine dong...");
+        SLog.i("EF", "Updating engine " + engine.id + " dong...");
 
         //Title and summary
         if(engine.isRunning()){

@@ -39,6 +39,34 @@
             app:layout_constraintTop_toBottomOf="@+id/progressBar" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <fragment
+        android:id="@+id/gs1"
+        android:name="net.chetch.engineroom2.EngineFragment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        app:engine_name="Genset 1"
+        app:include_hz="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/notificationbar" />
+
+    <fragment
+        android:id="@+id/gs2"
+        android:name="net.chetch.engineroom2.EngineFragment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        app:engine_name="Genset 2"
+        app:include_hz="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gs1" />
+
     <include
         android:id="@+id/actionbar"
         layout="@layout/actionbar"
@@ -55,19 +83,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/actionbar" />
-
-    <fragment
-        android:id="@+id/gs1"
-        android:name="net.chetch.engineroom2.EngineFragment"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        app:engine_name="Genset 1"
-        app:include_hz="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/notificationbar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

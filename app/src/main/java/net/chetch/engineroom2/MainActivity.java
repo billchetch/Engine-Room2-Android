@@ -29,9 +29,7 @@ public class MainActivity extends GenericActivity implements NotificationBar.INo
 
     static boolean connected = false;
     static boolean suppressConnectionErrors = false;
-
-
-    ConnectManager connectManager = new ConnectManager();
+    static ConnectManager connectManager = new ConnectManager();
 
     EngineRoomMessagingModel model;
 
@@ -85,29 +83,36 @@ public class MainActivity extends GenericActivity implements NotificationBar.INo
 
         includeActionBar(SettingsActivity.class);
 
-        model = ViewModelProviders.of(this).get(EngineRoomMessagingModel.class);
-        model.getError().observe(this, throwable -> {
+
+
+        if(!connectManager.isConnected()) {
+            model = ViewModelProviders.of(this).get(EngineRoomMessagingModel.class);
+            model.getError().observe(this, throwable -> {
+                try {
+                    handleError(throwable, model);
+                } catch (Exception e){
+                    SLog.e("Main", e.getMessage());
+                }
+            });
+
             try {
-                handleError(throwable, model);
-            } catch (Exception e){
-                SLog.e("Main", e.getMessage());
+                Logger.info("Main activity sstting cm client name, adding modules and requesting connect ...");
+                model.setClientName("ACMCAPEngineRoom", getApplicationContext());
+
+                connectManager.addModel(model);
+
+                connectManager.setPermissableServerTimeDifference(5 * 60);
+
+                connectManager.requestConnect(connectProgress);
+
+                NotificationBar.setView(findViewById(R.id.notificationbar), 100);
+                NotificationBar.monitor(this, connectManager, "connection");
+            } catch (Exception e) {
+                showError(e);
             }
-        });
-
-        try {
-            Logger.info("Main activity sstting cm client name, adding modules and requesting connect ...");
-            model.setClientName("ACMCAPEngineRoom", getApplicationContext());
-
-            connectManager.addModel(model);
-
-            connectManager.setPermissableServerTimeDifference(5 * 60);
-
-            connectManager.requestConnect(connectProgress);
-
-            NotificationBar.setView(findViewById(R.id.notificationbar), 100);
-            NotificationBar.monitor(this, connectManager, "connection");
-        } catch (Exception e){
-            showError(e);
+        } else {
+            //already connected so ensure things are hidden that might otherwise be displayed by default
+            hideProgress();
         }
     }
 
@@ -122,6 +127,21 @@ public class MainActivity extends GenericActivity implements NotificationBar.INo
     }
 
     private void handleError(Throwable t, Object source){
+        if (suppressConnectionErrors && connected && (ConnectManager.isConnectionError(t) || t instanceof MessagingServiceException)) {
+            final String errMsg = t.getClass().getName() + "\n" + t.getMessage() + "\n" + t.getCause() + "\n" + getStackTrace(t);
+            SLog.e("MAIN", "Suppressed connection error: " + errMsg);
+            Logger.error("Suppressed connection error: " + errMsg);
+            NotificationBar.show(NotificationBar.NotificationType.ERROR,
+                    "An exception has occurred ...click for more details",
+                    t).setListener(new NotificationBar.INotificationListener() {
+                @Override
+                public void onClick(NotificationBar nb, NotificationBar.NotificationType ntype) {
+                    showError(errMsg);
+                }
+            });
+            return;
+        }
+
         String errMsg = "SCE: " + suppressConnectionErrors + ", CNCT: " + connected + ", ICE: " + ConnectManager.isConnectionError(t);
         errMsg += "\n" + t.getClass().getName() + "\n" + t.getMessage() + "\n" + t.getCause() + "\n" + getStackTrace(t);
 

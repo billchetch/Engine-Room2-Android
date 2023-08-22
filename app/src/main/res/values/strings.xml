@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">Engine Room</string>
     <string name="app_version" translatable="false">1.0.0</string>
+    <string name="gs1" translatable="false">Genset 1</string>
+    <string name="gs2" translatable="false">Genset 2</string>
+    <string name="induk" translatable="false">Induk</string>
+    <string name="bantu" translatable="false">Bantu</string>
+    <string name="pmp_clp" translatable="false">Pompa Celup</string>
+    <string name="pmp_sol" translatable="false">Pompa Solar</string>
+
 </resources>

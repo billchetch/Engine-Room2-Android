@@ -2,6 +2,7 @@ package net.chetch.engineroom2;
 
 import android.os.Bundle;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
@@ -12,8 +13,10 @@ import android.util.Log;
 import net.chetch.appframework.GenericActivity;
 import net.chetch.appframework.IDialogManager;
 import net.chetch.appframework.NotificationBar;
+import net.chetch.engineroom2.data.Pump;
 import net.chetch.engineroom2.models.EngineRoomMessageSchema;
 import net.chetch.engineroom2.models.EngineRoomMessagingModel;
+import net.chetch.engineroom2.data.Engine;
 import net.chetch.messaging.ClientConnection;
 import net.chetch.messaging.MessagingViewModel;
 import net.chetch.messaging.exceptions.MessagingServiceException;
@@ -107,12 +110,15 @@ public class MainActivity extends GenericActivity implements NotificationBar.INo
 
                 NotificationBar.setView(findViewById(R.id.notificationbar), 100);
                 NotificationBar.monitor(this, connectManager, "connection");
+                NotificationBar.monitor(this, model.dataEvent, "engine room data event");
+
             } catch (Exception e) {
                 showError(e);
             }
         } else {
             //already connected so ensure things are hidden that might otherwise be displayed by default
             hideProgress();
+            NotificationBar.hide();
         }
     }
 
@@ -171,7 +177,7 @@ public class MainActivity extends GenericActivity implements NotificationBar.INo
     }
 
     @Override
-    public void handleNotification(Object notifier, String tag) {
+    public void handleNotification(Object notifier, String tag, Object data) {
         if(notifier instanceof ConnectManager){
             ConnectManager cm = (ConnectManager)notifier;
             switch(cm.getState()){
@@ -186,6 +192,36 @@ public class MainActivity extends GenericActivity implements NotificationBar.INo
                 case RECONNECT_REQUEST:
                     NotificationBar.show(NotificationBar.NotificationType.WARNING, "Attempting to reconnect...");
                     break;
+            }
+        } else if(notifier instanceof LiveData){
+            LiveData<EngineRoomMessagingModel.DataEvent> ld = (LiveData)notifier;
+            EngineRoomMessagingModel.DataEvent dataEvent = ld.getValue();
+            if(dataEvent.source instanceof Engine){
+                Engine engine = (Engine)dataEvent.source;
+                int rid = getStringResource(engine.id.replace('-', '_'));
+                String engineName = getString(rid);
+                switch((Engine.Event)dataEvent.data){
+                    case ENGINE_ON:
+                        NotificationBar.show(NotificationBar.NotificationType.INFO, engineName + " is running", null,5);
+                        break;
+
+                    case ENGINE_OFF:
+                        NotificationBar.show(NotificationBar.NotificationType.INFO, engineName + " has stopped running", null,5);
+                        break;
+                }
+            } else if(dataEvent.source instanceof Pump){
+                Pump pump = (Pump)dataEvent.source;
+                int rid = getStringResource(pump.id.replace('-', '_'));
+                String pumpName = getString(rid);
+                switch((Pump.Event)dataEvent.data){
+                    case PUMP_ON:
+                        NotificationBar.show(NotificationBar.NotificationType.INFO, pumpName + " is pumping", null,5);
+                        break;
+
+                    case PUMP_OFF:
+                        NotificationBar.show(NotificationBar.NotificationType.INFO, pumpName + " has stopped pumping", null,5);
+                        break;
+                }
             }
         }
     }

@@ -54,7 +54,7 @@ public class EngineFragment extends Fragment implements IExpandIconListener {
         //Indicator and title
         title = (IndicatorFragment)fm.findFragmentById(R.id.engineTitle);
         title.setName(engineName);
-        title.update(IndicatorFragment.State.OFF, "Connecting...");
+        title.update(IndicatorFragment.State.OFF, "Waiting to connect...");
         title.getView().setOnClickListener((view)->{
             expandDetails.onClick(null);
         });

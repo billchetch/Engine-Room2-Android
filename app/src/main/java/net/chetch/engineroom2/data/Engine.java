@@ -12,7 +12,12 @@ import java.util.Calendar;
 
 import androidx.lifecycle.MutableLiveData;
 
-public class Engine {
+public class Engine extends AOData{
+
+    public enum Event{
+        ENGINE_ON,
+        ENGINE_OFF,
+    }
 
     public enum OilPressureState
     {
@@ -22,7 +27,6 @@ public class Engine {
         SENSOR_FAULT
     }
 
-    public String id;
     public int rpm;
     public double temp;
     public OilPressureState oil;
@@ -30,13 +34,21 @@ public class Engine {
     public Calendar lastOn;
     public Calendar lastOff;
 
-    public boolean running;
+    private boolean running;
     public long runningFor;
     public long ranFor;
     public long stoppedRunningFor;
 
     public Engine(String id){
-        this.id = id;
+        super(id);
+    }
+
+    public void setRunning(boolean running){
+        boolean oldRunning = this.running;
+        this.running = running;
+        if(oldRunning != this.running) {
+            notifyObservers(this.running ? Event.ENGINE_ON : Event.ENGINE_OFF);
+        }
     }
 
     public String getSummary(){

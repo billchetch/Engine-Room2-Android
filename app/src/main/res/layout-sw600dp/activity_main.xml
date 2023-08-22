@@ -56,33 +56,81 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/actionbar" />
 
-    <fragment
-        android:id="@+id/gs1"
-        android:name="net.chetch.engineroom2.EngineFragment"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
-        app:engine_name="Genset 1"
-        app:include_hz="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/notificationbar" />
+    <ScrollView
+        android:id="@+id/engineCtnScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/notificationbar"
+        tools:layout_editor_absoluteX="-8dp">
 
-    <fragment
-        android:id="@+id/gs2"
-        android:name="net.chetch.engineroom2.EngineFragment"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        app:engine_name="Genset 2"
-        app:include_hz="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gs1" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="24dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="24dp">
+
+            <fragment
+                android:id="@+id/induk"
+                android:name="net.chetch.engineroom2.EngineFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:engine_name="Induk"
+                app:include_hz="false"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <fragment
+                android:id="@+id/bantu"
+                android:name="net.chetch.engineroom2.EngineFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                app:engine_name="Bantu"
+                app:include_hz="false"
+                app:layout_constraintTop_toBottomOf="@+id/induk" />
+
+            <fragment
+                android:id="@+id/gs1"
+                android:name="net.chetch.engineroom2.EngineFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                app:engine_name="Genset 1"
+                app:include_hz="true"
+                app:layout_constraintTop_toBottomOf="@+id/bantu" />
+
+            <fragment
+                android:id="@+id/gs2"
+                android:name="net.chetch.engineroom2.EngineFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                app:engine_name="Genset 2"
+                app:include_hz="true"
+                app:layout_constraintTop_toBottomOf="@+id/gs1" />
+
+            <fragment
+                android:id="@+id/pmp-clp"
+                android:name="net.chetch.engineroom2.PumpFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:pump_name="Pompa Celup"
+                app:layout_constraintTop_toBottomOf="@+id/gs2"
+                tools:layout_editor_absoluteX="8dp" />
+
+            <fragment
+                android:id="@+id/pmp-sol"
+                android:name="net.chetch.engineroom2.PumpFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:pump_name="Pompa Solar"
+                app:layout_constraintTop_toBottomOf="@+id/pmp-clp"
+                tools:layout_editor_absoluteX="8dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

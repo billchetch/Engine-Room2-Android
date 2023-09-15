@@ -73,8 +73,8 @@
             android:paddingTop="24dp">
 
             <fragment
-                android:id="@+id/induk"
-                android:name="net.chetch.engineroom2.EngineFragment"
+                android:id="@+id/idk"
+                android:name="net.chetch.cmengineroom.EngineFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:engine_name="Induk"
@@ -82,28 +82,28 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <fragment
-                android:id="@+id/bantu"
-                android:name="net.chetch.engineroom2.EngineFragment"
+                android:id="@+id/bnt"
+                android:name="net.chetch.cmengineroom.EngineFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 app:engine_name="Bantu"
                 app:include_hz="false"
-                app:layout_constraintTop_toBottomOf="@+id/induk" />
+                app:layout_constraintTop_toBottomOf="@+id/idk" />
 
             <fragment
                 android:id="@+id/gs1"
-                android:name="net.chetch.engineroom2.EngineFragment"
+                android:name="net.chetch.cmengineroom.EngineFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 app:engine_name="Genset 1"
                 app:include_hz="true"
-                app:layout_constraintTop_toBottomOf="@+id/bantu" />
+                app:layout_constraintTop_toBottomOf="@+id/bnt" />
 
             <fragment
                 android:id="@+id/gs2"
-                android:name="net.chetch.engineroom2.EngineFragment"
+                android:name="net.chetch.cmengineroom.EngineFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
@@ -113,22 +113,22 @@
 
             <fragment
                 android:id="@+id/pmp-clp"
-                android:name="net.chetch.engineroom2.PumpFragment"
+                android:name="net.chetch.cmengineroom.PumpFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:pump_name="Pompa Celup"
+                android:layout_marginTop="24dp"
                 app:layout_constraintTop_toBottomOf="@+id/gs2"
+                app:pump_name="Pompa Celup"
                 tools:layout_editor_absoluteX="8dp" />
 
             <fragment
                 android:id="@+id/pmp-sol"
-                android:name="net.chetch.engineroom2.PumpFragment"
+                android:name="net.chetch.cmengineroom.PumpFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:pump_name="Pompa Solar"
+                android:layout_marginTop="24dp"
                 app:layout_constraintTop_toBottomOf="@+id/pmp-clp"
+                app:pump_name="Pompa Solar"
                 tools:layout_editor_absoluteX="8dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

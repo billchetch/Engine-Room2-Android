@@ -1,3 +1,4 @@
+include ':cmengineroom'
 include ':messaging'
 project(':messaging').projectDir=new File('/Users/billthorgerson/Documents/AndroidStudioProjects/ChetchMessagingTest/messaging')
 include ':webservices'

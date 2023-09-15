@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/../ChetchMessagingTest/messaging" />
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/cmengineroom" />
             <option value="$PROJECT_DIR$/../Utils/utilities" />
             <option value="$PROJECT_DIR$/../WebservicesTest/webservices" />
           </set>

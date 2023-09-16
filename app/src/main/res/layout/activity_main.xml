@@ -45,7 +45,8 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/actionbar.height"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <include
         android:id="@+id/notificationbar"
@@ -83,7 +84,7 @@
 
             <fragment
                 android:id="@+id/bnt"
-                android:name="net.chetch.engineroom2.EngineFragment"
+                android:name="net.chetch.cmengineroom.EngineFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -112,25 +113,7 @@
                 app:include_hz="true"
                 app:layout_constraintTop_toBottomOf="@+id/gs1" />
 
-            <fragment
-                android:id="@+id/pmp-clp"
-                android:name="net.chetch.cmengineroom.PumpFragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:pump_name="@string/pmp_clp"
-                app:layout_constraintTop_toBottomOf="@+id/gs2"
-                tools:layout_editor_absoluteX="8dp" />
 
-            <fragment
-                android:id="@+id/pmp-sol"
-                android:name="net.chetch.cmengineroom.PumpFragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:pump_name="@string/pmp_sol"
-                app:layout_constraintTop_toBottomOf="@+id/pmp-clp"
-                tools:layout_editor_absoluteX="8dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

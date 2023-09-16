@@ -5,9 +5,13 @@ import android.os.Bundle;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
 import android.util.Log;
+
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import net.chetch.appframework.GenericActivity;
 import net.chetch.appframework.IDialogManager;
@@ -78,6 +82,9 @@ public class MainActivity extends GenericActivity implements NotificationBar.INo
         }
     };
 
+    //ViewPager2 viewPager;
+    //TabLayout tabLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +93,14 @@ public class MainActivity extends GenericActivity implements NotificationBar.INo
         includeActionBar(SettingsActivity.class);
 
 
+        MainViewPagerAdapter mainViewPagerAdapater = new MainViewPagerAdapter(this);
+        ViewPager2 viewPager = findViewById(R.id.mainViewPager);
+        viewPager.setAdapter(mainViewPagerAdapater);
+
+        TabLayout tabLayout = findViewById(R.id.mainTabLayout);
+        String[] labels = new String[]{"Engines", "Pumps"};
+        TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> tab.setText(labels[position]));
+        tabLayoutMediator.attach();
 
         if(!connectManager.isConnected()) {
             model = ViewModelProviders.of(this).get(EngineRoomMessagingModel.class);
@@ -120,6 +135,8 @@ public class MainActivity extends GenericActivity implements NotificationBar.INo
             NotificationBar.hide();
         }
     }
+
+
 
     private String getStackTrace(Throwable t){
         String stackTrace = "";

@@ -67,10 +67,10 @@ public class IndicatorFragment extends Fragment implements MenuItem.OnMenuItemCl
         setName(indicatorName);
 
         if(stateColours.size() == 0) {
-            stateColours.put(State.DISABLED, ContextCompat.getColor(getContext(), R.color.darkGrey));
-            stateColours.put(State.OFF, ContextCompat.getColor(getContext(), R.color.mediumnDarkGrey));
-            stateColours.put(State.ON, ContextCompat.getColor(getContext(), R.color.bluegreen2));
-            stateColours.put(State.ERROR, ContextCompat.getColor(getContext(), R.color.errorRed));
+            stateColours.put(State.DISABLED, ContextCompat.getColor(getContext(), net.chetch.appresources.R.color.darkGrey));
+            stateColours.put(State.OFF, ContextCompat.getColor(getContext(), net.chetch.appresources.R.color.mediumnDarkGrey));
+            stateColours.put(State.ON, ContextCompat.getColor(getContext(), net.chetch.appresources.R.color.bluegreen2));
+            stateColours.put(State.ERROR, ContextCompat.getColor(getContext(), net.chetch.appresources.R.color.errorRed));
         }
 
         if(menuItems == null) {
@@ -180,13 +180,13 @@ public class IndicatorFragment extends Fragment implements MenuItem.OnMenuItemCl
             switch (state) {
                 case ON:
                 case OFF:
-                    textColour = ContextCompat.getColor(getContext(), R.color.white);
+                    textColour = ContextCompat.getColor(getContext(), net.chetch.appresources.R.color.white);
                     break;
                 case ERROR:
-                    textColour = ContextCompat.getColor(getContext(), R.color.errorRed);
+                    textColour = ContextCompat.getColor(getContext(), net.chetch.appresources.R.color.errorRed);
                     break;
                 case DISABLED:
-                    textColour = ContextCompat.getColor(getContext(), R.color.mediumGrey);
+                    textColour = ContextCompat.getColor(getContext(), net.chetch.appresources.R.color.mediumGrey);
                     break;
             }
         } catch (Exception e){

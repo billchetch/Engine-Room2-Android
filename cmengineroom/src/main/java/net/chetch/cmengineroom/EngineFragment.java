@@ -63,10 +63,10 @@ public class EngineFragment extends Fragment implements IExpandIconListener {
         rpm.setLimits(0, 2000);
         rpm.setName("RPM");
         rpm.setThresholdColours(
-                ContextCompat.getColor(getContext(), R.color.bluegreen2),
-                ContextCompat.getColor(getContext(), R.color.bluegreen),
-                ContextCompat.getColor(getContext(), R.color.age2),
-                ContextCompat.getColor(getContext(), R.color.age4));
+                ContextCompat.getColor(getContext(), net.chetch.appresources.R.color.bluegreen2),
+                ContextCompat.getColor(getContext(), net.chetch.appresources.R.color.bluegreen),
+                ContextCompat.getColor(getContext(), net.chetch.appresources.R.color.age2),
+                ContextCompat.getColor(getContext(), net.chetch.appresources.R.color.age4));
         rpm.setThresholdValues(1620, 1750, 2000);
 
         //Temperature
@@ -74,9 +74,9 @@ public class EngineFragment extends Fragment implements IExpandIconListener {
         temperature.setLimits(0, 60);
         temperature.setName("Temp");
         temperature.setThresholdColours(
-                ContextCompat.getColor(getContext(), R.color.bluegreen2),
-                ContextCompat.getColor(getContext(), R.color.age2),
-                ContextCompat.getColor(getContext(), R.color.age4));
+                ContextCompat.getColor(getContext(), net.chetch.appresources.R.color.bluegreen2),
+                ContextCompat.getColor(getContext(), net.chetch.appresources.R.color.age2),
+                ContextCompat.getColor(getContext(), net.chetch.appresources.R.color.age4));
         temperature.setThresholdValues(40, 45);
 
         //Oil
@@ -89,11 +89,11 @@ public class EngineFragment extends Fragment implements IExpandIconListener {
         hz.setName("Hz");
         hz.setLimits(40, 60);
         hz.setThresholdColours(
-                ContextCompat.getColor(getContext(), R.color.age4),
-                ContextCompat.getColor(getContext(), R.color.age2),
-                ContextCompat.getColor(getContext(), R.color.bluegreen2),
-                ContextCompat.getColor(getContext(), R.color.age2),
-                ContextCompat.getColor(getContext(), R.color.age4));
+                ContextCompat.getColor(getContext(), net.chetch.appresources.R.color.age4),
+                ContextCompat.getColor(getContext(), net.chetch.appresources.R.color.age2),
+                ContextCompat.getColor(getContext(), net.chetch.appresources.R.color.bluegreen2),
+                ContextCompat.getColor(getContext(), net.chetch.appresources.R.color.age2),
+                ContextCompat.getColor(getContext(), net.chetch.appresources.R.color.age4));
         hz.setThresholdValues(47.5, 49.0, 52.0, 53.0);
         hz.getView().setVisibility(includeHz ? View.VISIBLE : View.GONE);
 
@@ -164,7 +164,7 @@ public class EngineFragment extends Fragment implements IExpandIconListener {
         rpm.updateValue(engine.rpm);
 
         //Temp
-        String temp = String.format("%.1f", engine.temp) + getString(R.string.symbol_degree) + "C";
+        String temp = String.format("%.1f", engine.temp) + getString(net.chetch.appresources.R.string.symbol_degree) + "C";
         temperature.updateValue(engine.temp, temp);
 
         //Oil

@@ -51,9 +51,9 @@ public class LinearScaleFragment extends Fragment {
         valueView = contentView.findViewById(R.id.lsValue);
 
         if(thresholdColours.size() == 0){
-            thresholdColours.add(ContextCompat.getColor(getContext(), R.color.age0));
-            thresholdColours.add(ContextCompat.getColor(getContext(), R.color.age2));
-            thresholdColours.add(ContextCompat.getColor(getContext(), R.color.age4));
+            thresholdColours.add(ContextCompat.getColor(getContext(), net.chetch.appresources.R.color.age0));
+            thresholdColours.add(ContextCompat.getColor(getContext(), net.chetch.appresources.R.color.age2));
+            thresholdColours.add(ContextCompat.getColor(getContext(), net.chetch.appresources.R.color.age4));
         }
 
         return contentView;

@@ -60,6 +60,7 @@ public class PumpFragment extends Fragment {
                 updatePump(pump);
             });
         }
+        model.requestStatus(idName);
 
         return contentView;
     }

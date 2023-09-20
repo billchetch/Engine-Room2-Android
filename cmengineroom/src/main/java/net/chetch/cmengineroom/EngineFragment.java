@@ -106,6 +106,7 @@ public class EngineFragment extends Fragment implements IExpandIconListener {
                 updateEngine(engine);
             });
         }
+        model.requestStatus(idName);
 
         //set context menu
         MenuItem.OnMenuItemClickListener selectMenuItem = (item) -> {

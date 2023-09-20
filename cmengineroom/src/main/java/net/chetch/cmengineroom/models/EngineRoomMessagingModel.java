@@ -4,6 +4,7 @@ import android.util.Log;
 
 import net.chetch.cmengineroom.data.Engine;
 import net.chetch.cmengineroom.data.Pump;
+import net.chetch.messaging.ClientConnection;
 import net.chetch.messaging.MessagingViewModel;
 
 import java.util.HashMap;
@@ -71,11 +72,17 @@ public class EngineRoomMessagingModel extends MessagingViewModel implements Obse
     }
 
     public void requestStatus(String aoid){
-        getClient().sendCommand(EngineRoomMessageSchema.SERVICE_NAME, EngineRoomMessageSchema.statusCommand(aoid));
+        ClientConnection client = getClient();
+        if(client != null){
+            client.sendCommand(EngineRoomMessageSchema.SERVICE_NAME, EngineRoomMessageSchema.statusCommand(aoid));
+        }
     }
 
     public void enable(String aoid, boolean enable){
-        getClient().sendCommand(EngineRoomMessageSchema.SERVICE_NAME, EngineRoomMessageSchema.enableCommand(aoid), enable);
+        ClientConnection client = getClient();
+        if(client != null) {
+            client.sendCommand(EngineRoomMessageSchema.SERVICE_NAME, EngineRoomMessageSchema.enableCommand(aoid), enable);
+        }
     }
 
     public void enable(String aoid){

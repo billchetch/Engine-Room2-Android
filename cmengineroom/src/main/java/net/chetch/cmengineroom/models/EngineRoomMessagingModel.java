@@ -12,9 +12,12 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 public class EngineRoomMessagingModel extends MessagingViewModel implements Observer {
+    static public final String SERVICE_NAME = "BBEngineRoom";
+
     Map<String, EngineDataFilter> engineDataFilters = new HashMap<>();
     Map<String, PumpDataFilter> pumpDataFilters = new HashMap<>();
 
@@ -74,14 +77,14 @@ public class EngineRoomMessagingModel extends MessagingViewModel implements Obse
     public void requestStatus(String aoid){
         ClientConnection client = getClient();
         if(client != null){
-            client.sendCommand(EngineRoomMessageSchema.SERVICE_NAME, EngineRoomMessageSchema.statusCommand(aoid));
+            client.sendCommand(SERVICE_NAME, EngineRoomMessageSchema.statusCommand(aoid));
         }
     }
 
     public void enable(String aoid, boolean enable){
         ClientConnection client = getClient();
         if(client != null) {
-            client.sendCommand(EngineRoomMessageSchema.SERVICE_NAME, EngineRoomMessageSchema.enableCommand(aoid), enable);
+            client.sendCommand(SERVICE_NAME, EngineRoomMessageSchema.enableCommand(aoid), enable);
         }
     }
 

@@ -1,6 +1,7 @@
 package net.chetch.cmengineroom.models;
 
-import net.chetch.cmengineroom.data.AOData;
+import net.chetch.cmarduino.data.AOData;
+import net.chetch.cmarduino.models.AOMessageSchema;
 import net.chetch.cmengineroom.data.Engine;
 import net.chetch.cmengineroom.data.Pump;
 import net.chetch.messaging.MessageSchema;
@@ -8,10 +9,10 @@ import net.chetch.utilities.SLog;
 
 import java.util.Map;
 
-public class EngineRoomMessageSchema extends MessageSchema {
+import androidx.annotation.NonNull;
 
-    static public final String SERVICE_NAME = "BBEngineRoom";
-    static public final String AO_PREFIX = "AO:";
+public class EngineRoomMessageSchema extends AOMessageSchema {
+
     static public final String INDUK_ID = "idk";
     static public final String BANTU_ID = "bnt";
     static public final String GS1_ID = "gs1";
@@ -19,22 +20,6 @@ public class EngineRoomMessageSchema extends MessageSchema {
     static public final String POMPA_CELUP_ID = "pmp-clp";
     static public final String POMPA_SOLAR_ID = "pmp-sol";
 
-    static public String statusCommand(String aoid){
-        return "adm:" + aoid + ":status";
-    }
-    static public String enableCommand(String aoid){
-        return "adm:" + aoid + ":enable";
-    }
-
-
-    private String fn(String fieldName){
-        return AO_PREFIX + fieldName;
-    }
-
-    private void assignAOData(AOData aodata){
-        aodata.enable(message.getBoolean(fn("Enabled")));
-        SLog.i("ERMS", "Setting enabled for " + message.getString(fn("UID")) + " to: " + message.getBoolean(fn("Enabled")));
-    }
 
     public void assignEngineData(Engine engine){
         assignAOData(engine);

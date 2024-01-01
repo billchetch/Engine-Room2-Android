@@ -62,9 +62,8 @@ public class EngineRoomMessagingModel extends MessagingViewModel implements Obse
     }
 
     @Override
-    public void onClientConnected() {
-        super.onClientConnected();
-        Log.i("ERMM", "Client connected");
+    public void onReady() {
+        super.onReady();
 
         for(EngineDataFilter f : engineDataFilters.values()){
             requestStatus(f.engine.id);
@@ -75,10 +74,7 @@ public class EngineRoomMessagingModel extends MessagingViewModel implements Obse
     }
 
     public void requestStatus(String aoid){
-        ClientConnection client = getClient();
-        if(client != null){
-            client.sendCommand(SERVICE_NAME, EngineRoomMessageSchema.statusCommand(aoid));
-        }
+
     }
 
     public void enable(String aoid, boolean enable){
@@ -97,10 +93,12 @@ public class EngineRoomMessagingModel extends MessagingViewModel implements Obse
     }
 
     public MutableLiveData<Engine> getEngine(String id){
+        id = EngineRoomMessageSchema.sanitiseID(id);
         return engineDataFilters.containsKey(id) ? engineDataFilters.get(id).liveData : null;
     }
 
     public MutableLiveData<Pump> getPump(String id){
+        id = EngineRoomMessageSchema.sanitiseID(id);
         return pumpDataFilters.containsKey(id) ? pumpDataFilters.get(id).liveData : null;
     }
 

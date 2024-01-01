@@ -1,7 +1,7 @@
 package net.chetch.engineroom2;
 
-import net.chetch.cmengineroom.EnginesFragment;
-import net.chetch.cmengineroom.PumpsFragment;
+import net.chetch.cmengineroom.EnginesPageFragment;
+import net.chetch.cmengineroom.PumpsPageFragment;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -20,9 +20,9 @@ public class MainViewPagerAdapter extends FragmentStateAdapter {
    public Fragment createFragment(int position) {
       Fragment page = null;
       if(position == 0) {
-         page = new EnginesFragment();
+         page = new EnginesPageFragment();
       } else {
-         page = new PumpsFragment();
+         page = new PumpsPageFragment();
       }
 
       return page;
